@@ -20,7 +20,7 @@ var port = process.env.PORT || 8080;
 // DATABASE SETUP
 // =============================================================================
 var mongoose = require('mongoose');
-mongoose.connect(config.MONGO_URI);
+mongoose.connect(process.env.MONGO_URI);
 var ShowDate = require('./showdate');
 
 // Handle the connection event
