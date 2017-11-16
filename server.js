@@ -36,25 +36,25 @@ db.once('open', function() {
 // =============================================================================
 var router = express.Router();
 
-// middleware for all requests
+/* middleware for all requests */
 router.use((req, res, next) => {
 	console.log('Something is happening...');
 	next();
 })
 
-// test route
+/* test route */
 router.get('/', (req, res) => {
 	res.json({message: 'Welcome to the Crawford and Power API.'});
 });
 
-// /api/showdates
+/* /api/showdates */
 router.route('/showdates')
 
 	// get show dates
 	.get((req, res) => {
 		ShowDate.
 			find({
-				
+				// TODO: filter by age
 			}).
 			exec((err, showdates) => {
 				if (err)
@@ -66,6 +66,7 @@ router.route('/showdates')
 
 	// create show dates
 	.post((req, res) => {
+		/*
 		for (item in req.body) {
 			var showdate = new ShowDate(); // initialize a showdate
 			showdate.date = Date.parse(req.body[item].date);
@@ -78,6 +79,7 @@ router.route('/showdates')
 			});
 		}
 		res.json({message: 'Successfully created show dates.'});
+		*/
 	});
 
 

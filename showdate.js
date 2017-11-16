@@ -1,4 +1,4 @@
-// app/models/showdate.js
+// showdate.js
 
 var mongoose     = require('mongoose');
 var Schema       = mongoose.Schema;
