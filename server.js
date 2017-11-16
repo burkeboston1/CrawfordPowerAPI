@@ -37,8 +37,17 @@ var router = express.Router();
 
 /* middleware for all requests */
 router.use((req, res, next) => {
-	console.log('Something is happening...');
-	next();
+	res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+
+    // intercept OPTIONS method
+    if ('OPTIONS' == req.method) {
+      res.send(200);
+    }
+    else {
+      next();
+    }
 })
 
 /* test route */
@@ -77,8 +86,10 @@ router.route('/showdates')
 				showdate.location = req.body[item].location;
 
 				showdate.save((err) => {
-					if (err)
+					// TODO: respond with error message
+					if (err) {
 						res.send(err);
+					}
 				});
 			}
 			res.json({message: 'Successfully created show dates.'});
