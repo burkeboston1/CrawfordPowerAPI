@@ -19,7 +19,6 @@ var port = process.env.PORT || 8080;
 // DATABASE SETUP
 // =============================================================================
 var mongoose = require('mongoose');
-console.log(process.env.MONGO_URI);
 mongoose.connect(process.env.MONGO_URI);
 var ShowDate = require('./showdate');
 
@@ -66,20 +65,24 @@ router.route('/showdates')
 
 	// create show dates
 	.post((req, res) => {
-		/*
-		for (item in req.body) {
-			var showdate = new ShowDate(); // initialize a showdate
-			showdate.date = Date.parse(req.body[item].date);
-			showdate.venue = req.body[item].venue;
-			showdate.location = req.body[item].location;
+		const apiKey = req.get('API-Key');
+		// check single API key
+		if (!apiKey || apiKey !== process.env.API_KEY) {
+    		res.status(401).json({error: 'unauthorised'})
+  		} else {
+			for (item in req.body) {
+				var showdate = new ShowDate(); // initialize a showdate
+				showdate.date = Date.parse(req.body[item].date);
+				showdate.venue = req.body[item].venue;
+				showdate.location = req.body[item].location;
 
-			showdate.save((err) => {
-				if (err)
-					res.send(err);
-			});
+				showdate.save((err) => {
+					if (err)
+						res.send(err);
+				});
+			}
+			res.json({message: 'Successfully created show dates.'});
 		}
-		res.json({message: 'Successfully created show dates.'});
-		*/
 	});
 
 
